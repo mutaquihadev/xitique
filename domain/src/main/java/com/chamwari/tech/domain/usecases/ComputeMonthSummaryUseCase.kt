@@ -7,7 +7,12 @@ internal class ComputeMonthSummaryUseCase(
     events: List<Event>
 ) {
 
-    fun execute(): List<MonthSummary>{
-        return emptyList()
+    fun execute(): MonthSummary{
+        return MonthSummary(
+            dateOfEvents = emptyList(),
+            month = -1,
+            monthPrettyName = "",
+            totalCost = -1
+        )
     }
 }
