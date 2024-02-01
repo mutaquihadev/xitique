@@ -1,6 +1,6 @@
 package com.chamwari.tech.domain.usecases
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 
 class ComputeMonthSummaryUseCaseTest {
@@ -16,15 +16,16 @@ class ComputeMonthSummaryUseCaseTest {
 //        }
 //    }
 
-    @Test
+
     fun `test is test`() {
         assert(true)
     }
 
-    @Test
+
     fun `adding two numbers`() {
         assert(4* 4 == 16)
     }
+
 
     @Test
     fun `multiply two numbers`() {
