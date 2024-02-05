@@ -15,5 +15,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "xitique"
 include(":app")
-include(":domain")
-include(":mylibraryjunit")
