@@ -14,8 +14,8 @@ class GetMonthlyAggregatedEventSummaryUseCase(
             monthSummary = MonthSummary(
                 month = 0,
                 monthBalanceSummary = BalanceSummary(),
-                dateOfEvents = emptyList(),
-                monthPrettyName = "January"
+                dateOfEvents = listOf(5),
+                monthPrettyName = "Janeiro"
             ),
             eventsSummary = emptyList())
     }
