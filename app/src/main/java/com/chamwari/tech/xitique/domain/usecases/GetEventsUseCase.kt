@@ -4,12 +4,19 @@ import com.chamwari.tech.xitique.domain.entities.BalanceSummary
 import com.chamwari.tech.xitique.domain.entities.Event
 import com.chamwari.tech.xitique.domain.entities.MonthSummary
 import com.chamwari.tech.xitique.domain.entities.MonthlyAggregatedEventSummary
+import com.chamwari.tech.xitique.domain.repositories.EventsRepository
+import java.lang.IllegalArgumentException
 
 class GetMonthlyAggregatedEventSummaryUseCase(
-    val userBalance: Int,
-    val events : List<Event>
+    private val userBalance: Int,
+    private val repository: EventsRepository
 ) {
     fun execute(): MonthlyAggregatedEventSummary {
+
+        if(repository.getEvents().isEmpty()) {
+            throw IllegalArgumentException("Empty list of events is not computable")
+        }
+
         return MonthlyAggregatedEventSummary(
             monthSummary = MonthSummary(
                 month = 0,
