@@ -3,9 +3,7 @@ package com.chamwari.tech.xitique.domain.usecases
 import assertk.assertFailure
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import com.chamwari.tech.xitique.domain.entities.BalanceSummary
 import com.chamwari.tech.xitique.domain.entities.Event
-import com.chamwari.tech.xitique.domain.repositories.EventsRepository
 import com.chamwari.tech.xitique.domain.repositories.FakeEventsRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -37,7 +35,7 @@ class GetMonthlyAggregatedEventSummaryUseCaseTest {
         val timestamp = 1672972800L // 5 de Janeiro de 2024
         val singleEvent = Event(timestamp = timestamp , title = "Olivio birthday")
         val events = listOf(singleEvent)
-        repository.addEvents(listOf( singleEvent))
+        repository.addEvents(events = events)
 
         // ACT
         val monthlyAggregatedSummary = GetMonthlyAggregatedEventSummaryUseCase(userBalance = 0, repository = repository).execute()

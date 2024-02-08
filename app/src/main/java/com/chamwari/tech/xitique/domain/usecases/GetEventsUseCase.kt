@@ -1,11 +1,9 @@
 package com.chamwari.tech.xitique.domain.usecases
 
 import com.chamwari.tech.xitique.domain.entities.BalanceSummary
-import com.chamwari.tech.xitique.domain.entities.Event
 import com.chamwari.tech.xitique.domain.entities.MonthSummary
 import com.chamwari.tech.xitique.domain.entities.MonthlyAggregatedEventSummary
 import com.chamwari.tech.xitique.domain.repositories.EventsRepository
-import java.lang.IllegalArgumentException
 
 class GetMonthlyAggregatedEventSummaryUseCase(
     private val userBalance: Int,
