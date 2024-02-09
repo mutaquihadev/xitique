@@ -4,7 +4,6 @@ import com.chamwari.tech.xitique.domain.entities.Event
 
 class FakeEventsRepository : EventsRepository{
 
-
     private var _events  = mutableListOf<Event>()
 
     fun addEvents(events: List<Event>) {
@@ -12,5 +11,9 @@ class FakeEventsRepository : EventsRepository{
     }
     override fun getEvents(): List<Event> {
         return _events
+    }
+
+    fun clear() {
+        _events.clear()
     }
 }
