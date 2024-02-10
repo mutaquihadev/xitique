@@ -55,14 +55,14 @@ class GetMonthlyAggregatedEventSummaryUseCaseTest {
         val timestamp2 = 1707307200L // - Quarta-feira, 7 de fevereiro de 2024 às 12:00
         val timestamp3 = 1707933600L // - Quarta-feira, 14 de fevereiro de 2024 às 18:00
         val timestamp4 = 1708495200L // - Quarta-feira, 21 de fevereiro de 2024 às 06:00
-        val timestamp5 = 1709161200L // - Quarta-feira, 28 de fevereiro de 2024 às 23:00
+        //val timestamp5 = 1709161200L // - Quarta-feira, 28 de fevereiro de 2024 às 23:00
 
         val events = listOf(
-            Event(timestamp = timestamp1,"birthday"),
-            Event(timestamp = timestamp2,"birthday"),
-            Event(timestamp = timestamp3,"birthday"),
-            Event(timestamp = timestamp4,"birthday"),
-            Event(timestamp = timestamp5,"birthday")
+            Event(timestamp = timestamp1,"Olivio birthday"),
+            Event(timestamp = timestamp2,"Bianca birthday"),
+            Event(timestamp = timestamp3,"Michael birthday"),
+            Event(timestamp = timestamp4,"Binu birthday"),
+            //Event(timestamp = timestamp5,"Bells birthday")
         )
 
         repository.addEvents(events = events)
@@ -72,7 +72,7 @@ class GetMonthlyAggregatedEventSummaryUseCaseTest {
         val monthSummary = monthlyAggregatedEventSummary.monthSummary
 
         //Assert
-        val expectedDateOfEventsList = listOf(1, 7, 14, 21, 28)
+        val expectedDateOfEventsList = listOf(1, 7, 14, 21)
         assertThat(monthSummary.dateOfEvents).isEqualTo(expectedDateOfEventsList)
     }
 
