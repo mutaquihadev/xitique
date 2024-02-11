@@ -1,12 +1,14 @@
 package com.chamwari.tech.xitique.domain.usecases
 
 import com.chamwari.tech.xitique.domain.entities.BalanceSummary
+import com.chamwari.tech.xitique.domain.entities.Event
 import com.chamwari.tech.xitique.domain.entities.MonthSummary
 import com.chamwari.tech.xitique.domain.entities.MonthlyAggregatedEventSummary
 import com.chamwari.tech.xitique.domain.repositories.EventsRepository
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.math.roundToInt
 
 class GetMonthlyAggregatedEventSummaryUseCase(
     private val userBalance: Int,
@@ -36,14 +38,16 @@ class GetMonthlyAggregatedEventSummaryUseCase(
             val localDateTime = instant.toLocalDateTime(timeZone)
 
             // For displaying the date in a specific format, you would still format it manually or use a platform-specific formatter
-            println(localDateTime)
+            //println(localDateTime)
 
             //extractListOfDates(events)
             localDateTime
         }
 
+
+        val relativeBalanceInPercentage = calculateRelativeBalance(events)
+
         val monthNumber = dateTimes.first().month.value
-        print("Month is $monthNumber")
         val dateOfEvents = dateTimes.map { it.dayOfMonth }
         val monthPrettyName = monthsInPortuguese[monthNumber - 1]
         return MonthlyAggregatedEventSummary(
@@ -51,8 +55,8 @@ class GetMonthlyAggregatedEventSummaryUseCase(
                 month = monthNumber,
                 monthBalanceSummary = BalanceSummary(
                     balance = userBalance,
-                    balanceMessage = "",
-                     relativeBalanceInPercentage = 0.0f
+                    balanceMessage = "Seu saldo mensal é:",
+                     relativeBalanceInPercentage = relativeBalanceInPercentage
                 ),
                 dateOfEvents = dateOfEvents,
                 monthPrettyName = monthPrettyName,
@@ -60,5 +64,19 @@ class GetMonthlyAggregatedEventSummaryUseCase(
             ),
             eventsSummary = emptyList()
         )
+    }
+
+    private fun calculateRelativeBalance(events: List<Event>): Int {
+        val balanceRation = userBalance * 1f / (eventCost * events.size) * 100
+
+        val balance = balanceRation.roundToInt()
+
+        val balancePadded = if(balance > 100) {
+            100
+        } else {
+            balance
+        }
+
+        return balancePadded
     }
 }
