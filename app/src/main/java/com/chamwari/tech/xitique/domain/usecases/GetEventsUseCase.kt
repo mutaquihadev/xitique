@@ -17,9 +17,19 @@ class GetMonthlyAggregatedEventSummaryUseCase(
 ) {
 
     private val monthsInPortuguese = listOf(
-        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
-        )
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+    )
 
     fun execute(): MonthlyAggregatedEventSummary {
 
@@ -54,15 +64,12 @@ class GetMonthlyAggregatedEventSummaryUseCase(
             monthSummary = MonthSummary(
                 month = monthNumber,
                 monthBalanceSummary = BalanceSummary(
-                    balance = userBalance,
-                    balanceMessage = "Seu saldo mensal é:",
-                     relativeBalanceInPercentage = relativeBalanceInPercentage
+                    balance = userBalance, relativeBalanceInPercentage = relativeBalanceInPercentage
                 ),
                 dateOfEvents = dateOfEvents,
                 monthPrettyName = monthPrettyName,
                 totalCost = eventCost * events.size
-            ),
-            eventsSummary = emptyList()
+            ), eventsSummary = emptyList()
         )
     }
 
@@ -71,11 +78,17 @@ class GetMonthlyAggregatedEventSummaryUseCase(
 
         val balance = balanceRation.roundToInt()
 
-        val balancePadded = if(balance > 100) {
+        if(balance < 0) {
+            return  0
+        }
+
+        val balancePadded = if (balance > 100) {
             100
         } else {
             balance
         }
+
+
 
         return balancePadded
     }
