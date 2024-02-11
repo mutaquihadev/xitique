@@ -1,4 +1,8 @@
 package com.chamwari.tech.xitique.domain.entities
 
-class BalanceSummary {
-}
+
+data class BalanceSummary(
+    val relativeBalanceInPercentage: Float,
+    val balanceMessage: String,
+    val balance : Int
+)

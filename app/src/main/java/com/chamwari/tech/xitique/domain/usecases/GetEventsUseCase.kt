@@ -1,7 +1,6 @@
 package com.chamwari.tech.xitique.domain.usecases
 
 import com.chamwari.tech.xitique.domain.entities.BalanceSummary
-import com.chamwari.tech.xitique.domain.entities.Event
 import com.chamwari.tech.xitique.domain.entities.MonthSummary
 import com.chamwari.tech.xitique.domain.entities.MonthlyAggregatedEventSummary
 import com.chamwari.tech.xitique.domain.repositories.EventsRepository
@@ -11,8 +10,15 @@ import kotlinx.datetime.toLocalDateTime
 
 class GetMonthlyAggregatedEventSummaryUseCase(
     private val userBalance: Int,
+    private val eventCost: Int,
     private val repository: EventsRepository
 ) {
+
+    private val monthsInPortuguese = listOf(
+        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+        )
+
     fun execute(): MonthlyAggregatedEventSummary {
 
         val events = repository.getEvents()
@@ -36,14 +42,21 @@ class GetMonthlyAggregatedEventSummaryUseCase(
             localDateTime
         }
 
+        val monthNumber = dateTimes.first().month.value
+        print("Month is $monthNumber")
         val dateOfEvents = dateTimes.map { it.dayOfMonth }
-
+        val monthPrettyName = monthsInPortuguese[monthNumber - 1]
         return MonthlyAggregatedEventSummary(
             monthSummary = MonthSummary(
-                month = 0,
-                monthBalanceSummary = BalanceSummary(),
+                month = monthNumber,
+                monthBalanceSummary = BalanceSummary(
+                    balance = userBalance,
+                    balanceMessage = "",
+                     relativeBalanceInPercentage = 0.0f
+                ),
                 dateOfEvents = dateOfEvents,
-                monthPrettyName = "Janeiro"
+                monthPrettyName = monthPrettyName,
+                totalCost = eventCost * events.size
             ),
             eventsSummary = emptyList()
         )
