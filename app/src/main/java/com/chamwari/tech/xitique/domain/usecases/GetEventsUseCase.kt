@@ -5,9 +5,8 @@ import com.chamwari.tech.xitique.domain.entities.Event
 import com.chamwari.tech.xitique.domain.entities.MonthSummary
 import com.chamwari.tech.xitique.domain.entities.MonthlyAggregatedEventSummary
 import com.chamwari.tech.xitique.domain.repositories.EventsRepository
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import com.chamwari.tech.xitique.domain.utils.DateUtils
+import kotlinx.datetime.LocalDateTime
 import kotlin.math.roundToInt
 
 class GetMonthlyAggregatedEventSummaryUseCase(
@@ -15,21 +14,6 @@ class GetMonthlyAggregatedEventSummaryUseCase(
     private val eventCost: Int,
     private val repository: EventsRepository
 ) {
-
-    private val monthsInPortuguese = listOf(
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro"
-    )
 
     fun execute(): MonthlyAggregatedEventSummary {
 
@@ -39,57 +23,39 @@ class GetMonthlyAggregatedEventSummaryUseCase(
             throw IllegalArgumentException("Empty list of events is not computable")
         }
 
-        val timestamps = events.map { it.timestamp }
-        val dateTimes = timestamps.map { timestampSeconds ->
-            val instant = Instant.fromEpochSeconds(timestampSeconds)
-            val timeZone = TimeZone.currentSystemDefault()
-
-            // Convert to LocalDateTime for specific time zone
-            val localDateTime = instant.toLocalDateTime(timeZone)
-
-            // For displaying the date in a specific format, you would still format it manually or use a platform-specific formatter
-            //println(localDateTime)
-
-            //extractListOfDates(events)
-            localDateTime
+        val localDateTimesList: List<LocalDateTime> = events.map {
+            val timestamp = it.timestamp
+            DateUtils.timestampToLocalDateTime(timestamp)
         }
-
 
         val relativeBalanceInPercentage = calculateRelativeBalance(events)
 
-        val monthNumber = dateTimes.first().month.value
-        val dateOfEvents = dateTimes.map { it.dayOfMonth }
-        val monthPrettyName = monthsInPortuguese[monthNumber - 1]
+        val monthNumber = localDateTimesList.first().month.value
+        val dateOfEvents = localDateTimesList.map { it.dayOfMonth }
+        val monthPrettyName = DateUtils.monthsInPortuguese[monthNumber - 1]
+
+        val monthEventsTotalCost = eventCost * events.size
+        val montBalanceSummary = BalanceSummary(
+            balance = userBalance,
+            relativeBalanceInPercentage = relativeBalanceInPercentage
+        )
+
         return MonthlyAggregatedEventSummary(
             monthSummary = MonthSummary(
                 month = monthNumber,
-                monthBalanceSummary = BalanceSummary(
-                    balance = userBalance, relativeBalanceInPercentage = relativeBalanceInPercentage
-                ),
+                monthBalanceSummary = montBalanceSummary,
                 dateOfEvents = dateOfEvents,
                 monthPrettyName = monthPrettyName,
-                totalCost = eventCost * events.size
+                totalCost = monthEventsTotalCost
             ), eventsSummary = emptyList()
         )
     }
 
     private fun calculateRelativeBalance(events: List<Event>): Int {
-        val balanceRation = userBalance * 1f / (eventCost * events.size) * 100
+        val balanceRatio = (userBalance * 1f / (eventCost * events.size)) * 100
+        val balance = balanceRatio.roundToInt()
 
-        val balance = balanceRation.roundToInt()
-
-        if(balance < 0) {
-            return  0
-        }
-
-        val balancePadded = if (balance > 100) {
-            100
-        } else {
-            balance
-        }
-
-
-
-        return balancePadded
+        if (balance < 0) return 0
+        return if (balance > 100) 100 else balance
     }
 }
