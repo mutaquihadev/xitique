@@ -295,6 +295,49 @@ class GetMonthlyAggregatedEventSummaryUseCaseTest {
     }
 
 
+
+
+    @Test
+    fun `GIVEN user balance 750 and 5 events in a month WHEN computing Aggregate Summary THEN event summary relativeBalanceInPercentage should be correct`() {
+        // Arrange
+        val timestamp1 = 1709287200L // "1 Março 2024, 10:00"
+        val timestamp2 = 1709373600L // "2 Março 2024, 10:00"
+        val timestamp3 = 1709460000L // "3 Março 2024, 10:00"
+        val timestamp4 = 1709546400L // "4 Março 2024, 10:00"
+        val timestamp5 = 1709632800L // "5 Março 2024, 10:00"
+
+        val events = listOf(
+            Event(timestamp = timestamp1,"Olivio birthday"),
+            Event(timestamp = timestamp2,"Bianca birthday"),
+            Event(timestamp = timestamp3,"Michael birthday"),
+            Event(timestamp = timestamp4,"Binu birthday"),
+            Event(timestamp = timestamp5,"Owetho birthday")
+        )
+
+        repository.addEvents(events = events)
+
+        // Act
+        val monthlyAggregatedEventSummary = GetMonthlyAggregatedEventSummaryUseCase(
+            userBalance = 750,
+            eventCost = eventCost,
+            repository = repository
+        ).execute()
+
+
+        val firstEventBalanceRatioInPercentage = monthlyAggregatedEventSummary.eventsSummary[0].eventSummary.relativeBalanceInPercentage
+        val secondEventBalanceRatioInPercentage = monthlyAggregatedEventSummary.eventsSummary[1].eventSummary.relativeBalanceInPercentage
+        val thirdEventBalanceRatioInPercentage = monthlyAggregatedEventSummary.eventsSummary[2].eventSummary.relativeBalanceInPercentage
+        val fourthEventBalanceRatioInPercentage = monthlyAggregatedEventSummary.eventsSummary[3].eventSummary.relativeBalanceInPercentage
+        val fifthEventBalanceRatioInPercentage = monthlyAggregatedEventSummary.eventsSummary[4].eventSummary.relativeBalanceInPercentage
+
+        // Assert
+        assertThat(firstEventBalanceRatioInPercentage).isEqualTo(100)
+        assertThat(secondEventBalanceRatioInPercentage).isEqualTo(100)
+        assertThat(thirdEventBalanceRatioInPercentage).isEqualTo(50)
+        assertThat(fourthEventBalanceRatioInPercentage).isEqualTo(0)
+        assertThat(fifthEventBalanceRatioInPercentage).isEqualTo(0)
+    }
+
     @AfterEach
     fun tearDown() {
         repository.clear()

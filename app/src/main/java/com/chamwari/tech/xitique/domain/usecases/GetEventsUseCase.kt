@@ -2,6 +2,7 @@ package com.chamwari.tech.xitique.domain.usecases
 
 import com.chamwari.tech.xitique.domain.entities.BalanceSummary
 import com.chamwari.tech.xitique.domain.entities.Event
+import com.chamwari.tech.xitique.domain.entities.EventSummary
 import com.chamwari.tech.xitique.domain.entities.MonthSummary
 import com.chamwari.tech.xitique.domain.entities.MonthlyAggregatedEventSummary
 import com.chamwari.tech.xitique.domain.repositories.EventsRepository
@@ -40,6 +41,9 @@ class GetMonthlyAggregatedEventSummaryUseCase(
             relativeBalanceInPercentage = relativeBalanceInPercentage
         )
 
+        val eventSummaryList = computeEventsSummary(events)
+
+
         return MonthlyAggregatedEventSummary(
             monthSummary = MonthSummary(
                 month = monthNumber,
@@ -47,7 +51,7 @@ class GetMonthlyAggregatedEventSummaryUseCase(
                 dateOfEvents = dateOfEvents,
                 monthPrettyName = monthPrettyName,
                 totalCost = monthEventsTotalCost
-            ), eventsSummary = emptyList()
+            ), eventsSummary = eventSummaryList
         )
     }
 
@@ -57,5 +61,24 @@ class GetMonthlyAggregatedEventSummaryUseCase(
 
         if (balance < 0) return 0
         return if (balance > 100) 100 else balance
+    }
+
+    private fun computeEventsSummary(events : List<Event>) : List<EventSummary>{
+
+       return  events.mapIndexed { index, event,  ->
+            val eventBalance = userBalance - (index + 1) * eventCost
+            val balanceRelativeToEvent = ((userBalance / eventBalance) * 100)
+
+           println("event balance = $eventBalance | balanceRelativeToEvent = $balanceRelativeToEvent")
+
+            EventSummary(
+                event = event,
+                eventSummary = BalanceSummary(
+                    balanceTitle = "Seu saldo para o evento",
+                    balance = eventBalance,
+                    relativeBalanceInPercentage = balanceRelativeToEvent
+                )
+            )
+        }
     }
 }
