@@ -37,8 +37,7 @@ class GetMonthlyAggregatedEventSummaryUseCase(
 
         val monthEventsTotalCost = eventCost * events.size
         val montBalanceSummary = BalanceSummary(
-            balance = userBalance,
-            relativeBalanceInPercentage = relativeBalanceInPercentage
+            balance = userBalance, relativeBalanceInPercentage = relativeBalanceInPercentage
         )
 
         val eventSummaryList = computeEventsSummary(events)
@@ -63,20 +62,21 @@ class GetMonthlyAggregatedEventSummaryUseCase(
         return if (balance > 100) 100 else balance
     }
 
-    private fun computeEventsSummary(events : List<Event>) : List<EventSummary>{
+    private fun computeEventsSummary(events: List<Event>): List<EventSummary> {
 
-       return  events.mapIndexed { index, event,  ->
-            val eventBalance = userBalance - (index + 1) * eventCost
-            val balanceRelativeToEvent = ((userBalance / eventBalance) * 100)
-
-           println("event balance = $eventBalance | balanceRelativeToEvent = $balanceRelativeToEvent")
+        return events.mapIndexed { index, event ->
+            val balanceAfterEvent = userBalance - (index) * eventCost
+            val ratio = when {
+                 balanceAfterEvent > eventCost -> 100
+                 balanceAfterEvent <= 0 -> 0
+                 else -> ((balanceAfterEvent * 1f / eventCost) * 100).roundToInt()
+            }
 
             EventSummary(
-                event = event,
-                eventSummary = BalanceSummary(
+                event = event, eventSummary = BalanceSummary(
                     balanceTitle = "Seu saldo para o evento",
-                    balance = eventBalance,
-                    relativeBalanceInPercentage = balanceRelativeToEvent
+                    balance = eventCost,
+                    relativeBalanceInPercentage = ratio
                 )
             )
         }
