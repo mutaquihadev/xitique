@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("de.mannodermaus.android-junit5") version "1.10.0.0"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.5.21"
 }
 
 android {
@@ -66,8 +67,18 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
-
     testImplementation("com.willowtreeapps.assertk:assertk:0.26.1")
+
+    // Ktor client core
+    implementation("io.ktor:ktor-client-core:1.6.7")
+    // Ktor client for Android
+    implementation("io.ktor:ktor-client-android:1.6.7")
+    // For JSON serialization
+    implementation("io.ktor:ktor-client-serialization:1.6.7")
+    // For logging
+    implementation("io.ktor:ktor-client-serialization:1.6.7")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
