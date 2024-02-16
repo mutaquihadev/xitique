@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("de.mannodermaus.android-junit5") version "1.10.0.0"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.5.21"
+    id("kotlinx-serialization")
 }
 
 android {
@@ -76,7 +76,7 @@ dependencies {
     // For JSON serialization
     implementation("io.ktor:ktor-client-serialization:1.6.7")
     // For logging
-    implementation("io.ktor:ktor-client-serialization:1.6.7")
+    implementation("io.ktor:ktor-client-logging:1.6.7")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
