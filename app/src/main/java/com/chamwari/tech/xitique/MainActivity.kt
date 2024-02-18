@@ -15,23 +15,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.chamwari.tech.xitique.data.remote.XitiqueService
 import com.chamwari.tech.xitique.data.remote.dto.UsersResponse
 import com.chamwari.tech.xitique.ui.theme.XitiqueTheme
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val client = XitiqueService.createXitiqueService()
-
+    private val viewModel by viewModel<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.fetchUsers()
         setContent {
-            
-            val users = produceState(
-                initialValue = UsersResponse(emptyList()),
-                producer = {
-                    value = client.getSignedUsers()
-                    println("[SIGNED-USERS] $value")
-                }
-            )
-            
+
             XitiqueTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(

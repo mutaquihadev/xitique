@@ -10,19 +10,4 @@ import io.ktor.client.features.logging.Logging
 
 interface XitiqueService {
     suspend fun getSignedUsers() : UsersResponse
-
-    companion object {
-        fun createXitiqueService() : XitiqueService {
-            return XitiqueServiceImpl(
-                client = HttpClient(Android) {
-                    install(Logging) {
-                        level = LogLevel.ALL
-                    }
-                    install(JsonFeature) {
-                        serializer = KotlinxSerializer()
-                    }
-                }
-            )
-        }
-    }
 }
