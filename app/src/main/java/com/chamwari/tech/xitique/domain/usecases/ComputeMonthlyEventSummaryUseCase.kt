@@ -5,25 +5,16 @@ import com.chamwari.tech.xitique.domain.entities.Event
 import com.chamwari.tech.xitique.domain.entities.EventSummary
 import com.chamwari.tech.xitique.domain.entities.MonthSummary
 import com.chamwari.tech.xitique.domain.entities.MonthlyAggregatedEventSummary
-import com.chamwari.tech.xitique.domain.repositories.EventsRepository
 import com.chamwari.tech.xitique.domain.utils.DateUtils
 import kotlinx.datetime.LocalDateTime
 import kotlin.math.roundToInt
 
-class GetMonthlyAggregatedEventSummaryUseCase(
+class ComputeMonthlyEventSummaryUseCase(
     private val userBalance: Int,
     private val eventCost: Int,
-    private val repository: EventsRepository
-) {
+    private val events: List<Event>) {
 
-    fun execute(): MonthlyAggregatedEventSummary {
-
-        val events = repository.getEvents()
-
-        if (events.isEmpty()) {
-            throw IllegalArgumentException("Empty list of events is not computable")
-        }
-
+    fun execute() : MonthlyAggregatedEventSummary{
         val localDateTimesList: List<LocalDateTime> = events.map {
             val timestamp = it.timestamp
             DateUtils.timestampToLocalDateTime(timestamp)
@@ -42,8 +33,7 @@ class GetMonthlyAggregatedEventSummaryUseCase(
 
         val eventSummaryList = computeEventsSummary(events)
 
-
-        return MonthlyAggregatedEventSummary(
+        val monthlyAggregatedEventSummary = MonthlyAggregatedEventSummary(
             monthSummary = MonthSummary(
                 month = monthNumber,
                 monthBalanceSummary = montBalanceSummary,
@@ -52,6 +42,7 @@ class GetMonthlyAggregatedEventSummaryUseCase(
                 totalCost = monthEventsTotalCost
             ), eventsSummary = eventSummaryList
         )
+        return monthlyAggregatedEventSummary
     }
 
     private fun calculateRelativeBalance(events: List<Event>): Int {
@@ -64,15 +55,14 @@ class GetMonthlyAggregatedEventSummaryUseCase(
             else -> balance
         }
     }
-
     private fun computeEventsSummary(events: List<Event>): List<EventSummary> {
 
         return events.mapIndexed { index, event ->
             val balanceAfterEvent = userBalance - (index) * eventCost
             val ratio = when {
-                 balanceAfterEvent > eventCost -> 100
-                 balanceAfterEvent <= 0 -> 0
-                 else -> ((balanceAfterEvent * 1f / eventCost) * 100).roundToInt()
+                balanceAfterEvent > eventCost -> 100
+                balanceAfterEvent <= 0 -> 0
+                else -> ((balanceAfterEvent * 1f / eventCost) * 100).roundToInt()
             }
 
             EventSummary(
