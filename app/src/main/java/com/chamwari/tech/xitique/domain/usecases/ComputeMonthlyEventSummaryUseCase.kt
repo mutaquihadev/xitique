@@ -12,7 +12,8 @@ import kotlin.math.roundToInt
 class ComputeMonthlyEventSummaryUseCase(
     private val userBalance: Int,
     private val eventCost: Int,
-    private val events: List<Event>) {
+    private val events: List<Event>
+) {
 
     fun execute() : MonthlyAggregatedEventSummary{
         val localDateTimesList: List<LocalDateTime> = events.map {

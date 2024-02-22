@@ -10,8 +10,6 @@ import kotlinx.coroutines.flow.flow
 
 class GetMonthlyAggregatedEventSummaryUseCase(
     private val repository: EventsRepository,
-    private val userBalanceRepository: UserBalanceRepository,
-    private val eventCostRepository: EventCostRepository,
     private val computeMonthlyEventSummaryUseCase: ComputeMonthlyEventSummaryUseCase
 ) {
 
