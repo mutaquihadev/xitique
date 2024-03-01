@@ -1,15 +1,20 @@
 package com.chamwari.tech.xitique
 
+import com.chamwari.tech.xitique.BuildConfig.TOKEN
 import com.chamwari.tech.xitique.data.remote.XitiqueService
 import com.chamwari.tech.xitique.data.remote.XitiqueServiceImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
+import io.ktor.client.features.DefaultRequest
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.logging.LogLevel
 import io.ktor.client.features.logging.Logging
+import io.ktor.client.request.header
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+
+
 
 val appModule = module {
 
@@ -20,6 +25,9 @@ val appModule = module {
             }
             install(JsonFeature) {
                 serializer = KotlinxSerializer()
+            }
+            install(DefaultRequest) {
+                header("Authorization", "Bearer $TOKEN")
             }
         }
     }

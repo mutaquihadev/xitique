@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -8,7 +10,7 @@ plugins {
 android {
     namespace = "com.chamwari.tech.xitique"
     compileSdk = 34
-
+    android.buildFeatures.buildConfig = true
     defaultConfig {
         applicationId = "com.chamwari.tech.xitique"
         minSdk = 27
@@ -47,6 +49,19 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+
+    defaultConfig {
+        val secretsPropertiesFile = rootProject.file("config.properties")
+        if (secretsPropertiesFile.exists()) {
+            val secrets = Properties().apply {
+                load(secretsPropertiesFile.inputStream())
+            }
+            secrets.forEach { (key, value) ->
+                buildConfigField("String", key as String, "\"$value\"")
+            }
         }
     }
 }

@@ -13,4 +13,12 @@ class MainViewModel(
             println("signed users list RESULT = ${usersResponse.signedUsers}")
         }
     }
+
+    fun getMembers() {
+        viewModelScope.launch {
+            val response = repository.getUserMemberData()
+            val names = response.members.map { it.name }
+            println("NAMES = ${names.take(4)} size = ${names.size}")
+        }
+    }
 }
