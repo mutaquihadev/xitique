@@ -31,6 +31,7 @@ class MainActivity : ComponentActivity() {
                     Greeting("Android") {
                         viewModel.fetchUsers()
                         viewModel.getMembers()
+                        viewModel.getEvents()
                     }
                 }
             }

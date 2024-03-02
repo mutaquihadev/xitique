@@ -21,4 +21,12 @@ class MainViewModel(
             println("NAMES = ${names.take(4)} size = ${names.size}")
         }
     }
+
+    fun getEvents() {
+        viewModelScope.launch {
+            val response = repository.getEvents()
+
+            println("NAMES = ${response.events.take(4)} size = ${response.events.size}")
+        }
+    }
 }

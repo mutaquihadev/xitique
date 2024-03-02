@@ -1,6 +1,7 @@
 package com.chamwari.tech.xitique
 
 import com.chamwari.tech.xitique.data.remote.XitiqueService
+import com.chamwari.tech.xitique.data.remote.dto.EventsResponse
 import com.chamwari.tech.xitique.data.remote.dto.UserMemberDataResponse
 import com.chamwari.tech.xitique.data.remote.dto.UsersResponse
 
@@ -13,5 +14,9 @@ class MainRepositoryImpl(
 
     override suspend fun getUserMemberData(): UserMemberDataResponse {
         return service.getEvents()
+    }
+
+    override suspend fun getEvents(): EventsResponse {
+        return service.getEvents2()
     }
 }
