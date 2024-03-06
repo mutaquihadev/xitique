@@ -1,6 +1,8 @@
 package com.chamwari.tech.xitique
 
+import androidx.room.Room
 import com.chamwari.tech.xitique.BuildConfig.TOKEN
+import com.chamwari.tech.xitique.data.db.XitiqueDatabase
 import com.chamwari.tech.xitique.data.remote.XitiqueService
 import com.chamwari.tech.xitique.data.remote.XitiqueServiceImpl
 import io.ktor.client.HttpClient
@@ -15,7 +17,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 
-
+private const val DB = "com.chamwari.tech.xitique.data.db.XitiqueDatabase"
 val appModule = module {
 
     single {
@@ -42,4 +44,10 @@ val appModule = module {
     viewModel {
         MainViewModel(repository = get())
     }
+
+    single {
+        Room.databaseBuilder(get(), XitiqueDatabase::class.java, DB)
+            .build()
+    }
+
 }
