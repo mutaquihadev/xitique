@@ -3,6 +3,10 @@ package com.chamwari.tech.xitique.data.db
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+
+//TODO Convert date into pretty date
+//extract month and year and add on entity
+// to facilitate easy query
 @Entity
 class EventEntity(
     @PrimaryKey
@@ -10,3 +14,5 @@ class EventEntity(
     val name: String,
     val date: Long
 )
+
+

@@ -2,6 +2,7 @@ package com.chamwari.tech.xitique
 
 import androidx.room.Room
 import com.chamwari.tech.xitique.BuildConfig.TOKEN
+import com.chamwari.tech.xitique.data.db.EventDAO
 import com.chamwari.tech.xitique.data.db.XitiqueDatabase
 import com.chamwari.tech.xitique.data.remote.XitiqueService
 import com.chamwari.tech.xitique.data.remote.XitiqueServiceImpl
@@ -34,12 +35,16 @@ val appModule = module {
         }
     }
 
+    single<EventDAO> {
+        get<XitiqueDatabase>().eventDao()
+    }
+
     single<XitiqueService> {
         XitiqueServiceImpl(client = get())
     }
 
     single<MainRepository> {
-        MainRepositoryImpl(service = get())
+        MainRepositoryImpl(service = get(), eventDAO = get())
     }
     viewModel {
         MainViewModel(repository = get())
