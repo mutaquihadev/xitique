@@ -15,7 +15,7 @@ class ComputeMonthlyEventSummaryUseCase(
     private val events: List<Event>
 ) {
 
-    fun execute() : MonthlyAggregatedEventSummary{
+    fun execute(): MonthlyAggregatedEventSummary {
         val localDateTimesList: List<LocalDateTime> = events.map {
             val timestamp = it.timestamp
             DateUtils.timestampToLocalDateTime(timestamp)
@@ -34,7 +34,7 @@ class ComputeMonthlyEventSummaryUseCase(
 
         val eventSummaryList = computeEventsSummary(events)
 
-        val monthlyAggregatedEventSummary = MonthlyAggregatedEventSummary(
+        return MonthlyAggregatedEventSummary(
             monthSummary = MonthSummary(
                 month = monthNumber,
                 monthBalanceSummary = montBalanceSummary,
@@ -43,7 +43,6 @@ class ComputeMonthlyEventSummaryUseCase(
                 totalCost = monthEventsTotalCost
             ), eventsSummary = eventSummaryList
         )
-        return monthlyAggregatedEventSummary
     }
 
     private fun calculateRelativeBalance(events: List<Event>): Int {
