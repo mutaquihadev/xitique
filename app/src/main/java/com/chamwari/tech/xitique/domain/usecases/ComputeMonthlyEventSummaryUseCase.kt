@@ -7,19 +7,40 @@ import com.chamwari.tech.xitique.domain.entities.MonthSummary
 import com.chamwari.tech.xitique.domain.entities.MonthlyAggregatedEventSummary
 import com.chamwari.tech.xitique.domain.utils.DateUtils
 import kotlinx.datetime.LocalDateTime
+import java.util.Calendar
 import kotlin.math.roundToInt
-
+import java.util.Date
 class ComputeMonthlyEventSummaryUseCase(
     private val userBalance: Int,
     private val eventCost: Int,
     private val events: List<Event>
 ) {
 
+    private fun extractMonthNumberPrettyDateJava8(localDateTimesList: List<LocalDateTime>): Pair<Int, List<Int>> {
+        val monthNumber = localDateTimesList.first().month.value
+        val dateOfEvents = localDateTimesList.map { it.dayOfMonth }
+        return Pair(monthNumber, dateOfEvents)
+    }
+
+    fun dataFromLongJava(timesTamp : Long){
+        //timestamp to date java util
+        val date = Date(timesTamp)
+        val calendar = Calendar.getInstance().apply {
+            time = date
+        }
+
+        calendar.get(
+            Calendar.MONTH
+        )
+    }
+
     fun execute(): MonthlyAggregatedEventSummary {
         val localDateTimesList: List<LocalDateTime> = events.map {
             val timestamp = it.timestamp
             DateUtils.timestampToLocalDateTime(timestamp)
         }
+
+
 
         val relativeBalanceInPercentage = calculateRelativeBalance(events)
 
