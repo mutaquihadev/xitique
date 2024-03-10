@@ -1,8 +1,6 @@
 package com.chamwari.tech.xitique.data.remote
 
-import com.chamwari.tech.xitique.data.db.EventDAO
 import com.chamwari.tech.xitique.data.remote.dto.EventsResponse
-import com.chamwari.tech.xitique.data.remote.dto.UserMemberDataResponse
 import com.chamwari.tech.xitique.data.remote.dto.UsersResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
@@ -16,13 +14,7 @@ class XitiqueServiceImpl(
         }
     }
 
-    override suspend fun getEvents(): UserMemberDataResponse {
-        return client.get {
-            url(HttpRoutes.MEMBERS)
-        }
-    }
-
-    override suspend fun getEvents2(): EventsResponse {
+    override suspend fun getEvents(): EventsResponse {
         return client.get {
             url(HttpRoutes.EVENTS)
         }

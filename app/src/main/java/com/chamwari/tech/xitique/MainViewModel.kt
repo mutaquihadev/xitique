@@ -2,31 +2,34 @@ package com.chamwari.tech.xitique
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
+data class MainState(
+    val isLoading: Boolean = false,
+    val signedUsers: List<String> = emptyList()
+)
 
 class MainViewModel(
     private val repository : MainRepository
 ) : ViewModel() {
-    fun fetchUsers() {
-        viewModelScope.launch {
-            val usersResponse = repository.fetchSignedUsers()
-            println("signed users list RESULT = ${usersResponse.signedUsers}")
-        }
-    }
 
-    fun getMembers() {
-        viewModelScope.launch {
-            val response = repository.getUserMemberData()
-            val names = response.members.map { it.name }
-            println("NAMES = ${names.take(4)} size = ${names.size}")
-        }
-    }
+    private val _state = MutableStateFlow(
+        MainState()
+    )
 
-    fun getEvents() {
-        viewModelScope.launch {
-            val response = repository.getEvents()
+    val state = _state.asStateFlow()
+    init { getEvents() }
 
-            println("NAMES = ${response.events.take(4)} size = ${response.events.size}")
+    private fun getEvents() {
+        viewModelScope.launch {
+            repository.getEvents().collect { events ->
+                _state.update {
+                    it.copy(signedUsers = events.map { it.name })
+                }
+            }
         }
     }
 }

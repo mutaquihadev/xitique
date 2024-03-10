@@ -3,9 +3,8 @@ package com.chamwari.tech.xitique
 import com.chamwari.tech.xitique.data.db.EventDAO
 import com.chamwari.tech.xitique.data.db.EventEntity
 import com.chamwari.tech.xitique.data.remote.XitiqueService
-import com.chamwari.tech.xitique.data.remote.dto.EventsResponse
-import com.chamwari.tech.xitique.data.remote.dto.UserMemberDataResponse
 import com.chamwari.tech.xitique.data.remote.dto.UsersResponse
+import kotlinx.coroutines.flow.Flow
 
 class MainRepositoryImpl(
     private val service: XitiqueService,
@@ -15,21 +14,8 @@ class MainRepositoryImpl(
         return service.getSignedUsers()
     }
 
-    override suspend fun getUserMemberData(): UserMemberDataResponse {
-        return service.getEvents()
-    }
 
-    override suspend fun getEvents(): EventsResponse {
-
-        service.getEvents2().events.forEach {
-           val ent =  EventEntity(
-                id = it.id,
-                name = it.name,
-                date = it.date
-            )
-            eventDAO.insertEvent(ent)
-        }
-
-        return service.getEvents2()
+    override suspend fun getEvents(): Flow<List<EventEntity>> {
+        return eventDAO.getEvents()
     }
 }
