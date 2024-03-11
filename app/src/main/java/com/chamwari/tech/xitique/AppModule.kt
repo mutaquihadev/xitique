@@ -51,8 +51,8 @@ val appModule = module {
     }
 
     single {
-        Room.databaseBuilder(get(), XitiqueDatabase::class.java, DB)
+        Room.databaseBuilder(get(),
+            XitiqueDatabase::class.java, DB)
             .build()
     }
-
 }
