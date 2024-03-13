@@ -19,6 +19,8 @@ interface EventDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEvent(eventEntity: EventEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllEvents(events: List<EventEntity>)
     @Query("UPDATE evententity SET name = :name, date = :date WHERE id = :id")
     suspend fun updateEvent(id: String, name: String, date: Long)
 
