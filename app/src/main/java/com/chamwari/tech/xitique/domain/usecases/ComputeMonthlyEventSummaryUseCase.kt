@@ -40,8 +40,6 @@ class ComputeMonthlyEventSummaryUseCase(
             DateUtils.timestampToLocalDateTime(timestamp)
         }
 
-
-
         val relativeBalanceInPercentage = calculateRelativeBalance(events)
 
         val monthNumber = localDateTimesList.first().month.value

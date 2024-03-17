@@ -46,6 +46,7 @@ val appModule = module {
     single<MainRepository> {
         MainRepositoryImpl(service = get(), eventDAO = get())
     }
+
     viewModel {
         MainViewModel(repository = get())
     }
