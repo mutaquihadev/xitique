@@ -6,6 +6,7 @@ import com.chamwari.tech.xitique.data.db.EventDAO
 import com.chamwari.tech.xitique.data.db.XitiqueDatabase
 import com.chamwari.tech.xitique.data.remote.XitiqueService
 import com.chamwari.tech.xitique.data.remote.XitiqueServiceImpl
+import com.chamwari.tech.xitique.domain.usecases.GetMonthlyAggregatedEventSummaryUseCase
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.features.DefaultRequest
@@ -47,8 +48,12 @@ val appModule = module {
         MainRepositoryImpl(service = get(), eventDAO = get())
     }
 
+    factory<GetMonthlyAggregatedEventSummaryUseCase> {
+        GetMonthlyAggregatedEventSummaryUseCase(repository = get())
+    }
+
     viewModel {
-        MainViewModel(repository = get())
+        MainViewModel(get())
     }
 
     single {

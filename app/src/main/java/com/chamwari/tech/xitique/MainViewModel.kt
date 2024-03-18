@@ -2,6 +2,8 @@ package com.chamwari.tech.xitique
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chamwari.tech.xitique.domain.entities.MonthlyAggregatedEventSummary
+import com.chamwari.tech.xitique.domain.usecases.GetMonthlyAggregatedEventSummaryUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -13,7 +15,7 @@ data class MainState(
 )
 
 class MainViewModel(
-    private val repository : MainRepository
+    private val getSummaryUseCase: GetMonthlyAggregatedEventSummaryUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(
@@ -25,9 +27,12 @@ class MainViewModel(
 
     private fun getEvents() {
         viewModelScope.launch {
-            repository.getEvents().collect { events ->
+            getSummaryUseCase.execute().collect { summary: MonthlyAggregatedEventSummary ->
                 _state.update {
-                    it.copy(signedUsers = events.map { it.name })
+                    it.copy(
+                        isLoading = false,
+                        signedUsers = summary.eventsSummary.map { it.event.title }
+                    )
                 }
             }
         }

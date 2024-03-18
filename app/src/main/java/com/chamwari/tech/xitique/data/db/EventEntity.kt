@@ -15,4 +15,8 @@ class EventEntity(
     val date: Long
 )
 
+fun EventEntity.toEvent() = com.chamwari.tech.xitique.domain.entities.Event(
+    timestamp = date,
+    title = name
+)
 

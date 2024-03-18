@@ -12,7 +12,7 @@ class MainRepositoryImpl(
     private val service: XitiqueService,
     private val eventDAO: EventDAO
 ) : MainRepository {
-    override suspend fun getEvents(): Flow<List<EventEntity>> {
+    override  fun getEvents(): Flow<List<EventEntity>> {
         return eventDAO.getEvents().onEach {
             it.ifEmpty {
                 refreshEvents()

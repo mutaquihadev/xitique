@@ -16,24 +16,6 @@ class ComputeMonthlyEventSummaryUseCase(
     private val events: List<Event>
 ) {
 
-    private fun extractMonthNumberPrettyDateJava8(localDateTimesList: List<LocalDateTime>): Pair<Int, List<Int>> {
-        val monthNumber = localDateTimesList.first().month.value
-        val dateOfEvents = localDateTimesList.map { it.dayOfMonth }
-        return Pair(monthNumber, dateOfEvents)
-    }
-
-    fun dataFromLongJava(timesTamp : Long){
-        //timestamp to date java util
-        val date = Date(timesTamp)
-        val calendar = Calendar.getInstance().apply {
-            time = date
-        }
-
-        calendar.get(
-            Calendar.MONTH
-        )
-    }
-
     fun execute(): MonthlyAggregatedEventSummary {
         val localDateTimesList: List<LocalDateTime> = events.map {
             val timestamp = it.timestamp

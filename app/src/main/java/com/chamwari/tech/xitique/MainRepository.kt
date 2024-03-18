@@ -4,5 +4,5 @@ import com.chamwari.tech.xitique.data.db.EventEntity
 import kotlinx.coroutines.flow.Flow
 
 interface MainRepository {
-    suspend fun getEvents(): Flow<List<EventEntity>>
+    fun getEvents(): Flow<List<EventEntity>>
 }
