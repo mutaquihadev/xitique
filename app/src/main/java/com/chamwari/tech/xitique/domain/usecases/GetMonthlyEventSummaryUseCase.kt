@@ -24,10 +24,7 @@ class GetMonthlyAggregatedEventSummaryUseCase(
     private val eventCost: Int = 300,
 ) {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    fun execute(): Flow<MonthlyAggregatedEventSummary> =
-
-         repository.getEvents().map { eventEntities ->
+    fun execute(): Flow<MonthlyAggregatedEventSummary> = repository.getEvents().map { eventEntities ->
             val events = eventEntities.map { it.toEvent() }
 
 
@@ -61,8 +58,6 @@ class GetMonthlyAggregatedEventSummaryUseCase(
                 )
 
             monthlyAggregatedEventSummary
-            //emit(monthlyAggregatedEventSummary)
-            //emit(monthlyAggregatedEventSummary)
         }
 
 

@@ -5,7 +5,6 @@ import com.chamwari.tech.xitique.data.db.EventEntity
 import com.chamwari.tech.xitique.data.remote.XitiqueService
 import com.chamwari.tech.xitique.data.remote.dto.toEventEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 class MainRepositoryImpl(
