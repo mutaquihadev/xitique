@@ -24,9 +24,7 @@ class GetMonthlyAggregatedEventSummaryUseCase(
     private val eventCost: Int = 300,
 ) {
 
-    fun execute(): Flow<MonthlyAggregatedEventSummary> = repository.getEvents().map { eventEntities ->
-            val events = eventEntities.map { it.toEvent() }
-
+    fun execute(): Flow<MonthlyAggregatedEventSummary> = repository.getEvents().map { events ->
 
             val localDateTimesList: List<LocalDateTime> = events.map {
                 val timestamp = it.timestamp
@@ -63,6 +61,10 @@ class GetMonthlyAggregatedEventSummaryUseCase(
 
     private fun calculateRelativeBalance(events: List<Event>): Int {
         val balanceRatio = (userBalance * 1f / (eventCost * events.size)) * 100
+        /* TODO
+        throw IllegalArgumentException("Balance ratio is $balanceRatio") because
+        evens.size can be 0, throw an domain exception at a level above
+         */
         val balance = balanceRatio.roundToInt()
 
         return when {

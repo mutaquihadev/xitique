@@ -2,6 +2,7 @@ package com.chamwari.tech.xitique.data.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.chamwari.tech.xitique.domain.entities.Event
 
 
 //TODO Convert date into pretty date
@@ -15,7 +16,7 @@ class EventEntity(
     val date: Long
 )
 
-fun EventEntity.toEvent() = com.chamwari.tech.xitique.domain.entities.Event(
+fun EventEntity.toEvent() = Event(
     timestamp = date,
     title = name
 )
