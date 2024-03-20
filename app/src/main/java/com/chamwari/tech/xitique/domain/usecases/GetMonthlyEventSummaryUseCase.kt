@@ -1,25 +1,19 @@
 package com.chamwari.tech.xitique.domain.usecases
 
-import com.chamwari.tech.xitique.MainRepository
-import com.chamwari.tech.xitique.data.db.toEvent
+import com.chamwari.tech.xitique.presentation.EventSumaryRepository
 import com.chamwari.tech.xitique.domain.entities.BalanceSummary
 import com.chamwari.tech.xitique.domain.entities.Event
 import com.chamwari.tech.xitique.domain.entities.EventSummary
 import com.chamwari.tech.xitique.domain.entities.MonthSummary
 import com.chamwari.tech.xitique.domain.entities.MonthlyAggregatedEventSummary
-import com.chamwari.tech.xitique.domain.repositories.EventsRepository
 import com.chamwari.tech.xitique.domain.utils.DateUtils
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.datetime.LocalDateTime
 import kotlin.math.roundToInt
 
 class GetMonthlyAggregatedEventSummaryUseCase(
-    private val repository: MainRepository,
+    private val repository: EventSumaryRepository,
     private val userBalance: Int = 0,
     private val eventCost: Int = 300,
 ) {

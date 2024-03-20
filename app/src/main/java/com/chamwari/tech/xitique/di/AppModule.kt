@@ -1,4 +1,4 @@
-package com.chamwari.tech.xitique
+package com.chamwari.tech.xitique.di
 
 import androidx.room.Room
 import com.chamwari.tech.xitique.BuildConfig.TOKEN
@@ -7,6 +7,9 @@ import com.chamwari.tech.xitique.data.db.XitiqueDatabase
 import com.chamwari.tech.xitique.data.remote.XitiqueService
 import com.chamwari.tech.xitique.data.remote.XitiqueServiceImpl
 import com.chamwari.tech.xitique.domain.usecases.GetMonthlyAggregatedEventSummaryUseCase
+import com.chamwari.tech.xitique.presentation.EventSumaryRepository
+import com.chamwari.tech.xitique.presentation.EventSummaryRepositoryImpl
+import com.chamwari.tech.xitique.presentation.EventSummaryViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.features.DefaultRequest
@@ -44,8 +47,8 @@ val appModule = module {
         XitiqueServiceImpl(client = get())
     }
 
-    single<MainRepository> {
-        MainRepositoryImpl(service = get(), eventDAO = get())
+    single<EventSumaryRepository> {
+        EventSummaryRepositoryImpl(service = get(), eventDAO = get())
     }
 
     factory<GetMonthlyAggregatedEventSummaryUseCase> {
@@ -53,12 +56,13 @@ val appModule = module {
     }
 
     viewModel {
-        MainViewModel(get())
+        EventSummaryViewModel(get())
     }
 
     single {
         Room.databaseBuilder(get(),
-            XitiqueDatabase::class.java, DB)
+            XitiqueDatabase::class.java, DB
+        )
             .build()
     }
 }

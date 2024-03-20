@@ -13,12 +13,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.chamwari.tech.xitique.presentation.EventSummaryViewModel
 import com.chamwari.tech.xitique.ui.theme.XitiqueTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel by viewModel<MainViewModel>()
+    private val viewModel by viewModel<EventSummaryViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

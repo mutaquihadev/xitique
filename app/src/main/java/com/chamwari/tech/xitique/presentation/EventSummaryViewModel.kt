@@ -1,4 +1,4 @@
-package com.chamwari.tech.xitique
+package com.chamwari.tech.xitique.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,7 +14,7 @@ data class MainState(
     val signedUsers: List<String> = emptyList()
 )
 
-class MainViewModel(
+class EventSummaryViewModel(
     private val getSummaryUseCase: GetMonthlyAggregatedEventSummaryUseCase,
 ) : ViewModel() {
 

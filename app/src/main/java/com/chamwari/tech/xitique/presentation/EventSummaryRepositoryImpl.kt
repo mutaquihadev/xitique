@@ -1,4 +1,4 @@
-package com.chamwari.tech.xitique
+package com.chamwari.tech.xitique.presentation
 
 import com.chamwari.tech.xitique.data.db.EventDAO
 import com.chamwari.tech.xitique.data.db.EventEntity
@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
-class MainRepositoryImpl(
+class EventSummaryRepositoryImpl(
     private val service: XitiqueService,
     private val eventDAO: EventDAO
-) : MainRepository {
+) : EventSumaryRepository {
     override  fun getEvents(): Flow<List<Event>> {
         return eventDAO.getEvents().map{
             it.map { eventEntity -> eventEntity.toEvent() }
