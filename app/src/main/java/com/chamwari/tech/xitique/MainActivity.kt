@@ -24,24 +24,29 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+            EventSummaryScreen()
+        }
+    }
 
-            XitiqueTheme {
-                // A surface container using the 'background' color from the theme
-                val state = viewModel.state.collectAsState()
+    @Composable
+    private fun EventSummaryScreen() {
+        XitiqueTheme {
+            // A surface container using the 'background' color from the theme
+            val state = viewModel.state.collectAsState()
 
-                val context = LocalContext.current
+            val context = LocalContext.current
 
-                LazyColumn {
-                    items(
-                        state.value.signedUsers.size
-                    ) { index ->
-                        val name = state.value.signedUsers[index]
-                        Greeting(
-                            name = name,
-                            modifier = Modifier.fillMaxSize(),
-                        ) {
-                            Toast.makeText(context, "hello $name", Toast.LENGTH_SHORT).show()
-                        }
+            LazyColumn {
+                items(
+                    state.value.signedUsers.size
+                ) { index ->
+                    val name = state.value.signedUsers[index]
+
+                    EventTitle(
+                        name = name,
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
+                        Toast.makeText(context, "hello $name", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -50,19 +55,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
+fun EventTitle(name: String, modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
     Text(
         text = "Hello $name!",
         modifier = modifier.clickable {
             onClick.invoke()
         }
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    XitiqueTheme {
-        Greeting("Android")
-    }
 }
