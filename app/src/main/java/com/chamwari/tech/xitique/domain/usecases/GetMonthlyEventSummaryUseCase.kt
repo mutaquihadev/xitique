@@ -1,6 +1,6 @@
 package com.chamwari.tech.xitique.domain.usecases
 
-import com.chamwari.tech.xitique.presentation.EventSumaryRepository
+import com.chamwari.tech.xitique.presentation.EventSummaryRepository
 import com.chamwari.tech.xitique.domain.entities.BalanceSummary
 import com.chamwari.tech.xitique.domain.entities.Event
 import com.chamwari.tech.xitique.domain.entities.EventSummary
@@ -13,7 +13,7 @@ import kotlinx.datetime.LocalDateTime
 import kotlin.math.roundToInt
 
 class GetMonthlyAggregatedEventSummaryUseCase(
-    private val repository: EventSumaryRepository,
+    private val repository: EventSummaryRepository,
     private val userBalance: Int = 0,
     private val eventCost: Int = 300,
 ) {

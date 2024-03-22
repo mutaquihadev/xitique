@@ -7,7 +7,7 @@ import com.chamwari.tech.xitique.data.db.XitiqueDatabase
 import com.chamwari.tech.xitique.data.remote.XitiqueService
 import com.chamwari.tech.xitique.data.remote.XitiqueServiceImpl
 import com.chamwari.tech.xitique.domain.usecases.GetMonthlyAggregatedEventSummaryUseCase
-import com.chamwari.tech.xitique.presentation.EventSumaryRepository
+import com.chamwari.tech.xitique.presentation.EventSummaryRepository
 import com.chamwari.tech.xitique.presentation.EventSummaryRepositoryImpl
 import com.chamwari.tech.xitique.presentation.EventSummaryViewModel
 import io.ktor.client.HttpClient
@@ -47,7 +47,7 @@ val appModule = module {
         XitiqueServiceImpl(client = get())
     }
 
-    single<EventSumaryRepository> {
+    single<EventSummaryRepository> {
         EventSummaryRepositoryImpl(service = get(), eventDAO = get())
     }
 

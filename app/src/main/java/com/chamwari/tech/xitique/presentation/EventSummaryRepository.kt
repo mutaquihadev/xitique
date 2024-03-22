@@ -3,6 +3,6 @@ package com.chamwari.tech.xitique.presentation
 import com.chamwari.tech.xitique.domain.entities.Event
 import kotlinx.coroutines.flow.Flow
 
-interface EventSumaryRepository {
+interface EventSummaryRepository {
     fun getEvents(): Flow<List<Event>>
 }

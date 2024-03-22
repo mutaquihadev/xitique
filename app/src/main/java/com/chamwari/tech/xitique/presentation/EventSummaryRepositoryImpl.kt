@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.onEach
 class EventSummaryRepositoryImpl(
     private val service: XitiqueService,
     private val eventDAO: EventDAO
-) : EventSumaryRepository {
+) : EventSummaryRepository {
     override  fun getEvents(): Flow<List<Event>> {
         return eventDAO.getEvents().map{
             it.map { eventEntity -> eventEntity.toEvent() }

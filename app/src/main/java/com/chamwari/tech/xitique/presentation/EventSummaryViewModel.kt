@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class MainState(
+data class EventSummaryState(
     val isLoading: Boolean = false,
     val signedUsers: List<String> = emptyList()
 )
@@ -19,7 +19,7 @@ class EventSummaryViewModel(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(
-        MainState()
+        EventSummaryState()
     )
 
     val state = _state.asStateFlow()
@@ -31,7 +31,7 @@ class EventSummaryViewModel(
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        signedUsers = summary.eventsSummary.map { it.event.title }
+                        signedUsers = summary.eventsSummary.map { summary -> summary.event.title }
                     )
                 }
             }
