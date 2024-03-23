@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
                 EventTitle(
                     name = name
                 ) {
-                    Toast.makeText(context, "hello $name", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, name, Toast.LENGTH_SHORT).show()
                 }
 
                 Spacer(
@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
             .fillMaxWidth()
             .padding(16.dp)
             ) {
-            Text(text = "Hello $name!")
+            Text(text = name)
         }
     }
 }
