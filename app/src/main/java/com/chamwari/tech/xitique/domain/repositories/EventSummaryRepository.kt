@@ -1,4 +1,4 @@
-package com.chamwari.tech.xitique.presentation
+package com.chamwari.tech.xitique.domain.repositories
 
 import com.chamwari.tech.xitique.domain.entities.Event
 import kotlinx.coroutines.flow.Flow

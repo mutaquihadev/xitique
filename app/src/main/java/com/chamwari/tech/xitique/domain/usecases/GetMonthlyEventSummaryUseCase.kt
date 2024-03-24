@@ -1,6 +1,6 @@
 package com.chamwari.tech.xitique.domain.usecases
 
-import com.chamwari.tech.xitique.presentation.EventSummaryRepository
+import com.chamwari.tech.xitique.domain.repositories.EventSummaryRepository
 import com.chamwari.tech.xitique.domain.entities.BalanceSummary
 import com.chamwari.tech.xitique.domain.entities.Event
 import com.chamwari.tech.xitique.domain.entities.EventSummary

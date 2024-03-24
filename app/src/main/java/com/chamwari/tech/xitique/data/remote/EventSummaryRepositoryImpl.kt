@@ -1,11 +1,11 @@
-package com.chamwari.tech.xitique.presentation
+package com.chamwari.tech.xitique.data.remote
 
 import com.chamwari.tech.xitique.data.db.EventDAO
 import com.chamwari.tech.xitique.data.db.EventEntity
 import com.chamwari.tech.xitique.data.db.toEvent
-import com.chamwari.tech.xitique.data.remote.XitiqueService
 import com.chamwari.tech.xitique.data.remote.dto.toEventEntity
 import com.chamwari.tech.xitique.domain.entities.Event
+import com.chamwari.tech.xitique.domain.repositories.EventSummaryRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
