@@ -107,7 +107,7 @@ dependencies {
     testImplementation("io.insert-koin:koin-test:3.2.0")
 
     // MockK for mocking in tests
-    testImplementation("io.mockk:mockk:1.12.0")
+    testImplementation("io.mockk:mockk:1.13.10")
 
     // SQLDelight
     implementation("com.squareup.sqldelight:runtime:1.5.3")
@@ -116,7 +116,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
@@ -127,6 +127,11 @@ dependencies {
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-rxjava2:2.6.1")
     implementation("androidx.room:room-rxjava3:2.6.1")
+
+    //add coroutine test libraries
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+    //add turbine for testing flow
+    testImplementation("app.cash.turbine:turbine:1.1.0")
 }
 kapt {
     correctErrorTypes = true
